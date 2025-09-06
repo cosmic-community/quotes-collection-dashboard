@@ -51,7 +51,7 @@ export function QuoteCard({ quote }: QuoteCardProps) {
           </div>
         )}
 
-        {/* Language & Source */}
+        {/* Language & Source - removed "No data available" fallbacks */}
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center space-x-4">
             {quote.metadata.language && (
@@ -62,7 +62,7 @@ export function QuoteCard({ quote }: QuoteCardProps) {
             )}
           </div>
           
-          {/* Only show date if it's valid - removed "No date" fallback */}
+          {/* Only show date if it's valid */}
           {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) && (
             <div className="flex items-center space-x-1 text-gray-400">
               <Calendar className="h-3 w-3" />
