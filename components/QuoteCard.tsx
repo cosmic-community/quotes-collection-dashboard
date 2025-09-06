@@ -7,7 +7,9 @@ interface QuoteCardProps {
 }
 
 export function QuoteCard({ quote }: QuoteCardProps) {
-  const author = typeof quote.metadata.author === 'object' ? quote.metadata.author : null;
+  const author = typeof quote.metadata.author === 'object' && quote.metadata.author !== null 
+    ? quote.metadata.author 
+    : null;
   const categories = quote.metadata.categories || [];
   
   return (
@@ -19,11 +21,13 @@ export function QuoteCard({ quote }: QuoteCardProps) {
         </blockquote>
 
         {/* Author */}
-        {author && (
+        {quote.metadata.author && (
           <div className="flex items-center space-x-2 text-sm text-gray-600">
             <User className="h-4 w-4" />
-            <span>— {author.title}</span>
-            {author.metadata?.birth_year && (
+            <span>
+              — {author ? author.title : typeof quote.metadata.author === 'string' ? quote.metadata.author.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Unknown Author'}
+            </span>
+            {author?.metadata?.birth_year && (
               <span className="text-gray-400">
                 ({author.metadata.birth_year}
                 {author.metadata?.death_year && `-${author.metadata.death_year}`})
@@ -61,7 +65,10 @@ export function QuoteCard({ quote }: QuoteCardProps) {
           <div className="flex items-center space-x-1 text-gray-400">
             <Calendar className="h-3 w-3" />
             <span>
-              {new Date(quote.created_at).toLocaleDateString()}
+              {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) 
+                ? new Date(quote.created_at).toLocaleDateString()
+                : 'No date'
+              }
             </span>
           </div>
         </div>

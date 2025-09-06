@@ -7,7 +7,9 @@ interface QuoteDetailProps {
 }
 
 export function QuoteDetail({ quote }: QuoteDetailProps) {
-  const author = typeof quote.metadata.author === 'object' ? quote.metadata.author : null;
+  const author = typeof quote.metadata.author === 'object' && quote.metadata.author !== null 
+    ? quote.metadata.author 
+    : null;
   const categories = quote.metadata.categories || [];
 
   return (
@@ -32,10 +34,10 @@ export function QuoteDetail({ quote }: QuoteDetailProps) {
           </blockquote>
 
           {/* Author Section */}
-          {author && (
+          {quote.metadata.author && (
             <div className="mb-8 p-6 bg-gray-50 rounded-lg">
               <div className="flex items-start space-x-4">
-                {author.metadata?.portrait && (
+                {author?.metadata?.portrait && (
                   <img
                     src={`${author.metadata.portrait.imgix_url}?w=80&h=80&fit=crop&auto=format,compress`}
                     alt={author.title}
@@ -48,9 +50,9 @@ export function QuoteDetail({ quote }: QuoteDetailProps) {
                   <div className="flex items-center space-x-2 mb-2">
                     <User className="h-5 w-5 text-gray-400" />
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {author.title}
+                      {author ? author.title : typeof quote.metadata.author === 'string' ? quote.metadata.author.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Unknown Author'}
                     </h3>
-                    {author.metadata?.birth_year && (
+                    {author?.metadata?.birth_year && (
                       <span className="text-gray-500">
                         ({author.metadata.birth_year}
                         {author.metadata?.death_year && `-${author.metadata.death_year}`})
@@ -58,13 +60,13 @@ export function QuoteDetail({ quote }: QuoteDetailProps) {
                     )}
                   </div>
                   
-                  {author.metadata?.nationality && author.metadata?.profession && (
+                  {author?.metadata?.nationality && author.metadata?.profession && (
                     <p className="text-sm text-gray-600 mb-2">
                       {author.metadata.profession} • {author.metadata.nationality}
                     </p>
                   )}
                   
-                  {author.metadata?.bio && (
+                  {author?.metadata?.bio && (
                     <p className="text-sm text-gray-700 leading-relaxed">
                       {author.metadata.bio}
                     </p>
@@ -121,11 +123,14 @@ export function QuoteDetail({ quote }: QuoteDetailProps) {
               <div>
                 <span className="font-medium text-gray-900">Created</span>
                 <p className="text-gray-700">
-                  {new Date(quote.created_at).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) 
+                    ? new Date(quote.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })
+                    : 'No date available'
+                  }
                 </p>
               </div>
             </div>
