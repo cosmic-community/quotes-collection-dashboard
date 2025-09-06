@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { Quote as QuoteIcon } from 'lucide-react';
 import { Quote, Author, Category, QuoteFilters } from '@/types';
 import { QuoteCard } from './QuoteCard';
 import { QuoteFilters as FiltersComponent } from './QuoteFilters';
@@ -59,7 +60,7 @@ export function QuotesGrid({ quotes, authors, categories }: QuotesGridProps) {
 
       {filteredQuotes.length === 0 ? (
         <div className="text-center py-12">
-          <Quote className="mx-auto h-12 w-12 text-gray-400" />
+          <QuoteIcon className="mx-auto h-12 w-12 text-gray-400" />
           <h3 className="mt-2 text-sm font-medium text-gray-900">
             No quotes found
           </h3>
