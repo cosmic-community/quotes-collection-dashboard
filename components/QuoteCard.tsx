@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Quote } from '@/types';
-import { ExternalLink, User, Calendar } from 'lucide-react';
+import { ExternalLink, User } from 'lucide-react';
 
 interface QuoteCardProps {
   quote: Quote;
@@ -51,7 +51,7 @@ export function QuoteCard({ quote }: QuoteCardProps) {
           </div>
         )}
 
-        {/* Language & Source - removed "No data available" fallbacks */}
+        {/* Language & Source - removed all date/created sections */}
         <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center space-x-4">
             {quote.metadata.language && (
@@ -61,16 +61,6 @@ export function QuoteCard({ quote }: QuoteCardProps) {
               <span>Source: {quote.metadata.source}</span>
             )}
           </div>
-          
-          {/* Only show date if it's valid */}
-          {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) && (
-            <div className="flex items-center space-x-1 text-gray-400">
-              <Calendar className="h-3 w-3" />
-              <span>
-                {new Date(quote.created_at).toLocaleDateString()}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Actions */}
