@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { Header } from './Header';
-import { Navigation } from './Navigation';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -11,15 +10,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="flex">
-        <Navigation />
-        
-        <main className="flex-1 lg:pl-64">
-          <div className="p-6">
-            {children}
-          </div>
-        </main>
-      </div>
+      {/* Main Content - Full Width */}
+      <main className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
