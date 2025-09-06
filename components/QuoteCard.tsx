@@ -62,15 +62,15 @@ export function QuoteCard({ quote }: QuoteCardProps) {
             )}
           </div>
           
-          <div className="flex items-center space-x-1 text-gray-400">
-            <Calendar className="h-3 w-3" />
-            <span>
-              {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) 
-                ? new Date(quote.created_at).toLocaleDateString()
-                : 'No date'
-              }
-            </span>
-          </div>
+          {/* Only show date if it's valid - removed "No date" fallback */}
+          {quote.created_at && !isNaN(new Date(quote.created_at).getTime()) && (
+            <div className="flex items-center space-x-1 text-gray-400">
+              <Calendar className="h-3 w-3" />
+              <span>
+                {new Date(quote.created_at).toLocaleDateString()}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Actions */}
